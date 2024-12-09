@@ -5,8 +5,6 @@ const User = require("../models/userModal");
 exports.register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-
-    console.log("req,body", req.body);
     const userExist = await User.findOne({ email });
 
     if (userExist) {
@@ -16,7 +14,9 @@ exports.register = async (req, res) => {
     const newUser = new User({ name, email, password });
 
     await newUser.save();
-    res.status(201).json({ message: "User registered successfully" });
+    res
+      .status(201)
+      .json({ status: true, message: "User registered successfully" });
   } catch (error) {
     console.log("Error :", error.message);
     res.status(500).json({
@@ -52,7 +52,7 @@ exports.login = async (req, res) => {
       }
     );
 
-    res.status(200).json({ token });
+    res.status(200).json({ status: true, token });
   } catch (error) {
     console.log("Error :", error.message);
     res.status(500).json({
