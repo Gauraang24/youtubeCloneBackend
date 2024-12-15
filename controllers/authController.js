@@ -52,7 +52,13 @@ exports.login = async (req, res) => {
       }
     );
 
-    res.status(200).json({ status: true, token });
+    res.status(200).json({
+      status: true,
+      token,
+      data: {
+        userId: user._id,
+      },
+    });
   } catch (error) {
     console.log("Error :", error.message);
     res.status(500).json({
