@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModal");
+const channel = require("../models/channelModal");
 
 exports.register = async (req, res) => {
   try {
@@ -24,6 +25,7 @@ exports.register = async (req, res) => {
     });
   }
 };
+
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -40,6 +42,8 @@ exports.login = async (req, res) => {
       return res.status(400).json({ message: "Invalid Credentails." });
     }
 
+    const channelId = (await channel.findOne({ userId: user._id })) || {};
+
     const token = jwt.sign(
       {
         userId: user._id,
@@ -52,12 +56,15 @@ exports.login = async (req, res) => {
       }
     );
 
+    const data = channelId
+      ? { userId: user._id, channelId: channelId._id }
+      : {
+          userId: user._id,
+        };
     res.status(200).json({
       status: true,
       token,
-      data: {
-        userId: user._id,
-      },
+      data: data,
     });
   } catch (error) {
     console.log("Error :", error.message);
