@@ -5,7 +5,8 @@ const cors = require("cors");
 require("dotenv").config();
 
 const authRoutes = require("./routes/authRoutes"); // Authentication routes
-const videoRoutes = require("./routes/videoRoute"); // Video routes
+const videoRoutes = require("./routes/videos"); // Video routes
+const channelRoutes = require("./routes/channelRoutes");
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(
 // Routers
 app.use("/api", authRoutes); // Authentication API
 app.use("/api/videos", videoRoutes); // Video API
+app.use("/api/channel", channelRoutes); //channel API
 
 // Connect to MongoDB
 connectWithDB();
