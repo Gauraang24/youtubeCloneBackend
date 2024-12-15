@@ -49,6 +49,15 @@ exports.createChannel = async (req, res) => {
       });
     }
 
+    // Check if channel already exists for the user
+    const channelExist = await channel.findOne({ userId });
+    if (channelExist) {
+      return res.status(409).json({
+        message: "Channel already exists for this user",
+        status: false,
+      });
+    }
+
     const uploadResponse = await cloudinary.uploader.upload(channelIcon.path, {
       folder: "channels",
       transformation: [{ width: 500, height: 500, crop: "limit" }],
@@ -56,7 +65,7 @@ exports.createChannel = async (req, res) => {
 
     const channelIconUrl = uploadResponse.secure_url;
 
-    const newChannel = new Channel({
+    const newChannel = new channel({
       userId,
       name,
       description,
