@@ -1,9 +1,5 @@
 const express = require("express");
-const {
-  getVideos,
-  uploadVids,
-  removeVideo,
-} = require("../controllers/videoController");
+const { getVideos } = require("../controllers/videoController");
 const multer = require("multer");
 
 // Configure Multer for file uploads
