@@ -6,7 +6,8 @@ require("dotenv").config();
 
 const authRoutes = require("./routes/authRoutes"); // Authentication routes
 const videoRoutes = require("./routes/videos"); // Video routes
-const channelRoutes = require("./routes/channelRoutes");
+const channelRoutes = require("./routes/channelRoutes"); //Channel Routes
+const commentRoutes = require("/routes/comment"); // Comment Routes
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use(
 app.use("/api", authRoutes); // Authentication API
 app.use("/api/videos", videoRoutes); // Video API
 app.use("/api/channel", channelRoutes); //channel API
+app.use("/api/comments", commentRoutes); //comment API
 
 // Connect to MongoDB
 connectWithDB();
