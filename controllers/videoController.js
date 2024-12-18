@@ -20,6 +20,7 @@ exports.getVideos = async (req, res) => {
     res.status(200).json({
       data: videos,
       status: true,
+      message: "Videos fetched successfully",
     });
   } catch (error) {
     res.status(500).json({
@@ -96,27 +97,5 @@ exports.getVideoById = async (req, res) => {
 //     res.status(201).json({ message: "Video uploaded successfully", video: newVideo });
 //   } catch (error) {
 //     res.status(500).json({ message: "Failed to upload video", error: error.message });
-//   }
-// };
-
-// // Remove a video
-// exports.removeVideo = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-
-//     const video = await Video.findById(id);
-//     if (!video) {
-//       return res.status(404).json({ message: "Video not found" });
-//     }
-
-//     // Extract public_id from video URL to delete it from Cloudinary
-//     const publicId = video.videoUrl.split("/").pop().split(".")[0];
-//     await cloudinary.uploader.destroy(publicId, { resource_type: "video" });
-
-//     await Video.findByIdAndDelete(id);
-
-//     res.status(200).json({ message: "Video deleted successfully" });
-//   } catch (error) {
-//     res.status(500).json({ message: "Failed to delete video", error: error.message });
 //   }
 // };

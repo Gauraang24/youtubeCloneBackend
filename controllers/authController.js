@@ -3,13 +3,16 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/userModal");
 const channel = require("../models/channelModal");
 
+//Api to register User
 exports.register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
     const userExist = await User.findOne({ email });
 
     if (userExist) {
-      return res.status(400).json({ message: "User already exists." });
+      return res
+        .status(400)
+        .json({ status: false, message: "User already exists." });
     }
 
     const newUser = new User({ name, email, password });
@@ -19,23 +22,26 @@ exports.register = async (req, res) => {
       .status(201)
       .json({ status: true, message: "User registered successfully" });
   } catch (error) {
-    console.log("Error :", error.message);
     res.status(500).json({
-      message: "Error registering user.",
+      status: true,
+      message: `Error ${error.message}`,
     });
   }
 };
 
+//Api to Log user in
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
+    //Checking if user exist
     const user = await User.findOne({ email });
 
     if (!user) {
       return res.status(400).json({ message: "Invalid Credentials." });
     }
 
+    //Checking is password matches
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
@@ -44,6 +50,7 @@ exports.login = async (req, res) => {
 
     const channelId = (await channel.findOne({ userId: user._id })) || {};
 
+    //Signing jwt token
     const token = jwt.sign(
       {
         userId: user._id,
@@ -65,11 +72,11 @@ exports.login = async (req, res) => {
       status: true,
       token,
       data: data,
+      message: "Logged In",
     });
   } catch (error) {
-    console.log("Error :", error.message);
     res.status(500).json({
-      message: "Error Login user.",
+      message: `Error ${error.message}`,
     });
   }
 };
