@@ -40,10 +40,13 @@ exports.getVideoById = async (req, res) => {
       });
     }
 
+    // Fetch related comments
+    const comments = await Comment.find({ videoId }).populate("userId", "name"); // Populate user details if needed
+
     res.status(200).json({
       message: "Video fetched successfully.",
       status: true,
-      data: video,
+      data: { video, comments },
     });
   } catch (error) {
     res.status(500).json({
