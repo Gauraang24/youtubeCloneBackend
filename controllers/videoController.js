@@ -5,7 +5,18 @@ const mongoose = require("mongoose");
 // Get all videos
 exports.getVideos = async (req, res) => {
   try {
-    const videos = await Video.find();
+    const { searchQuery, category } = req.query;
+    const filter = {};
+
+    if (searchQuery && searchQuery.trim() !== "") {
+      filter.title = { $regex: searchQuery, $options: "i" };
+    }
+
+    if (category && category.trim() !== "") {
+      filter.category = category;
+    }
+    const videos = await Video.find(filter);
+
     res.status(200).json({
       data: videos,
       status: true,
