@@ -8,6 +8,7 @@ const commentSchema = new mongoose.Schema({
     ref: "Video",
     required: true,
   },
+  createdAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model("comment", commentSchema);
+module.exports = mongoose.model("Comment", commentSchema);

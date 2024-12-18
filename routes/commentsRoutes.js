@@ -1,10 +1,22 @@
 const express = require("express");
 const router = express.Router();
+const {
+  getComments,
+  addComment,
+  editComment,
+  deleteComment,
+} = require("../controllers/commentController");
 
-//Comment routes
-router.get("/:videoId", comments)
-router.edit("/commentId", editComments)
-router.delete("/:delete", deleteUser)
+// Fetch all comments by videoId
+router.get("/:videoId", getComments);
 
+// Add a new comment
+router.post("/", addComment);
 
-module.exports = router
+// Edit a comment by commentId
+router.put("/:commentId", editComment);
+
+// Delete a comment by commentId
+router.delete("/:commentId", deleteComment);
+
+module.exports = router;
