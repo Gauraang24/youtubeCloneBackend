@@ -1,6 +1,7 @@
 const channel = require("../models/channelModal");
 const cloudinary = require("../config/cloudinary");
 const User = require("../models/userModal");
+const Video = require("../models/videoModal");
 
 exports.getChannel = async (req, res) => {
   try {
@@ -15,10 +16,12 @@ exports.getChannel = async (req, res) => {
       });
     }
 
+    const videosData = await Video.find({ channelId: channelId });
+
     res.status(200).json({
       message: "Channel fetched successfully",
       status: true,
-      data: channelInfo,
+      data: { channelInfo, videosData },
     });
   } catch (error) {
     res.status(500).json({

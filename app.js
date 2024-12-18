@@ -7,7 +7,7 @@ require("dotenv").config();
 const authRoutes = require("./routes/authRoutes"); // Authentication routes
 const videoRoutes = require("./routes/videos"); // Video routes
 const channelRoutes = require("./routes/channelRoutes"); //Channel Routes
-const commentRoutes = require("/routes/comment"); // Comment Routes
+const commentRoutes = require("./routes/commentsRoutes"); // Comment Routes
 
 const app = express();
 

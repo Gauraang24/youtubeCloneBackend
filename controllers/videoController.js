@@ -1,4 +1,5 @@
 const Video = require("../models/videoModal"); // Import the Video model
+const Comment = require("../models/commentModal"); //Imported the comment model
 const mongoose = require("mongoose");
 
 // Get all videos

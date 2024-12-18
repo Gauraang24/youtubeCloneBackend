@@ -1,4 +1,4 @@
-const Comment = require("../models/commentModel"); // Updated import
+const Comment = require("../models/commentModal"); // Updated import
 const mongoose = require("mongoose");
 
 // API for Fetching all comments by videoId
